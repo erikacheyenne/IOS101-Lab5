@@ -7,7 +7,21 @@ import UIKit
 import Nuke
 
 // TODO: Add table view data source conformance
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movies.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let movie = movies[indexPath.row]
+        cell.textLabel?.text = "\(movie.title)"
+        return cell
+    }
+    
+//    private var movies : [Movie] = []
+      private var movies = [Movie]()
+    
 
 
 
@@ -20,6 +34,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // TODO: Assign table view data source
+        MovieTableView.dataSource = self
 
 
         fetchMovies()
@@ -80,7 +95,8 @@ class ViewController: UIViewController {
 
                     // TODO: Store movies in the `movies` property on the view controller
 
-
+                    self?.movies = movies
+                    self?.MovieTableView.reloadData()
 
                 }
             } catch {
